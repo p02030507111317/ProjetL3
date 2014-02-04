@@ -1,5 +1,5 @@
 <?php
-	if (isset($_POST["field"]) AND isset($_POST["target"]) AND isset($_POST["mainrule"]) AND isset($_POST["excludes"])) {
+	if (isset($_POST["field"]) AND isset($_POST["target"]) AND isset($_POST["mainrule"])) {
 		$field = $_POST["field"];
 		$target = $_POST["target"];
 		$mainrule = $_POST["mainrule"];
