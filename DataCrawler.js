@@ -24,10 +24,38 @@ var Log = {
     this.elem.style.left = (500 - this.elem.offsetWidth / 2) + 'px';
   }
 };
-function init(){
+
+function add(fd, node, r, f){
+  $.ajax({
+    url: "crawler.php",
+    type: "POST",
+    dataType: "json",
+    //contentType: "json",
+    data: {"target":node.name, "mainrule":r, "field":f},
+    error: function(xhr, ajaxOptions, thrownError) {
+        alert("Error during data collect");
+      }
+    }).done(function( arg ) {
+      var j = arg;
+      alert(JSON.stringify(j));
+      var newnode;
+      for (var i = 0; i < j['noeuds'].length; i++) {
+        alert("Noeud: " + j["noeuds"][i]["id"] + " Nom: " + j["noeuds"][i]["nom"]);
+        newnode = fd.graph.addNode({
+        id:j["noeuds"][i]["id"], name:j["noeuds"][i]["nom"]
+        });
+      newnode.color = "#FF0000";
+      fd.graph.addAdjacence(node, newnode);
+      fd.animate;
+      };
+    });
+ 
+};
+
+function init(t, r, f){
   var fd = new $jit.ForceDirected({
     //id of the visualization container
-    injectInto: 'infovis',
+    injectInto: 'container',
     //Enable zooming and panning
     //with scrolling and DnD
     Navigation: {
@@ -45,7 +73,7 @@ function init(){
     // JSON structure.
     Node: {
       overridable: true,
-      dim: 7
+      dim: 12
     },
     Edge: {
       overridable: true,
@@ -69,11 +97,26 @@ function init(){
         node.pos.setc(pos.x, pos.y);
         fd.plot();
       },
+      onClick: function(node, eventInfo, e) {
+        if (node.color == '#FF0000'){
+          add(fd, node, mainrule, field);
+          node.color = "#0000FF";
+        }
+        else {
+          if(!node) return;  
+          var html = "<h4>" + node.name + "</h4><b> connections:</b><ul><li>";
+          var list = [];  
+          node.eachAdjacency(function(adj){  
+            list.push(adj.nodeTo.name);  
+          });   
+          $jit.id('inner-details').innerHTML = html + list.join("</li><li>") + "</li></ul>"; 
+        }
+      },
       //Implement the same handler for touchscreens
       onTouchMove: function(node, eventInfo, e) {
         $jit.util.event.stop(e); //stop default touchmove event
         this.onDragMove(node, eventInfo, e);
-      }
+      },
     },
     //Number of iterations for the FD algorithm
     iterations: 200,
@@ -165,23 +208,6 @@ function init(){
       style.display = '';
     }
   });
-  // load JSON data.
-  fd.loadJSON(json);
-  // compute positions incrementally and animate.
-  fd.computeIncremental({
-    iter: 40,
-    property: 'end',
-    onStep: function(perc){
-      Log.write(perc + '% loaded...');
-    },
-    onComplete: function(){
-      Log.write('done');
-      fd.animate({
-        modes: ['linear'],
-        transition: $jit.Trans.Elastic.easeOut,
-        duration: 2500
-      });
-    }
-  });
-  // end
+  var tmp = fd.graph.addNode({name:t, id:t});
+  add(fd, tmp, r, f);
 }
