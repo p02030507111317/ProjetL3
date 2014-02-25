@@ -26,6 +26,7 @@ var Log = {
 };
 
 function add(fd, node, r, f){
+  alert("Entrée");
   $.ajax({
     url: "crawler.php",
     type: "POST",
@@ -38,18 +39,24 @@ function add(fd, node, r, f){
     }).done(function( arg ) {
       var j = arg;
       alert(JSON.stringify(j));
-      var newnode;
       for (var i = 0; i < j['noeuds'].length; i++) {
-        alert("Noeud: " + j["noeuds"][i]["id"] + " Nom: " + j["noeuds"][i]["nom"]);
-        newnode = fd.graph.addNode({
-        id:j["noeuds"][i]["id"], name:j["noeuds"][i]["nom"]
-        });
-      newnode.color = "#FF0000";
-      fd.graph.addAdjacence(node, newnode);
-      fd.animate;
+        //alert("Noeud: " + j["noeuds"][i]["id"] + " Nom: " + j["noeuds"][i]["nom"]);
+        var newnode = {id: j["noeuds"][i]["id"], name: j["noeuds"][i]["nom"], data: {color: "#FF0000"}};
+        fd.graph.addNode(newnode);
+        fd.graph.addAdjacence(node, newnode);
       };
+      fd.computeIncremental({  
+          iter: 5,  
+          property: 'end',  
+          onStep: function(perc) {  
+            Log.write("loading " + perc + "%");  
+          },  
+          onComplete: function() {  
+          Log.write("done");  
+          fd.animate();  
+          }  
+        });
     });
- 
 };
 
 function init(t, r, f){
@@ -98,19 +105,25 @@ function init(t, r, f){
         fd.plot();
       },
       onClick: function(node, eventInfo, e) {
-        if (node.color == '#FF0000'){
-          add(fd, node, mainrule, field);
-          node.color = "#0000FF";
-        }
-        else {
-          if(!node) return;  
-          var html = "<h4>" + node.name + "</h4><b> connections:</b><ul><li>";
-          var list = [];  
-          node.eachAdjacency(function(adj){  
-            list.push(adj.nodeTo.name);  
-          });   
-          $jit.id('inner-details').innerHTML = html + list.join("</li><li>") + "</li></ul>"; 
-        }
+        // if (node.color == '#FF0000'){
+        //   add(fd, node, mainrule, field);
+        //   node.color = "#0000FF";
+        // }
+        // else {
+        //   if(!node) return;  
+        //   var html = "<h4>" + node.name + "</h4><b> connections:</b><ul><li>";
+        //   var list = [];  
+        //   node.eachAdjacency(function(adj){  
+        //     list.push(adj.nodeTo.name);  
+        //   });   
+        //   $jit.id('inner-details').innerHTML = html + list.join("</li><li>") + "</li></ul>"; 
+        // }
+        if (node) {
+          alert("Tu a cliqué sur un noeud");
+          add(fd, node, r, f);
+        } else{
+          alert("Tu a cliqué sur le canevas");
+        };
       },
       //Implement the same handler for touchscreens
       onTouchMove: function(node, eventInfo, e) {
@@ -208,6 +221,18 @@ function init(t, r, f){
       style.display = '';
     }
   });
-  var tmp = fd.graph.addNode({name:t, id:t});
-  add(fd, tmp, r, f);
+  var rootnode = {id: t, name: t, data: {color: "#FF0000"}}; 
+  fd.loadJSON(rootnode);
+  fd.refresh();
+  // fd.computeIncremental({  
+  // iter: 20,  
+  // property: 'end',  
+  // onStep: function(perc) {  
+  //   Log.write("loading " + perc + "%");  
+  // },  
+  // onComplete: function() {  
+  //   Log.write("done");  
+  //   fd.animate();  
+  // }  
+  // });  
 }
