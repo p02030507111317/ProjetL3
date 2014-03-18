@@ -4,14 +4,32 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>DataCrawler</title>
     
-<link type="text/css" href="css/base.css" rel="stylesheet" />  
-<link type="text/css" href="css/ForceDirected.css" rel="stylesheet" />    
-    
-<script language="javascript" type="text/javascript" src="Jit/jit.js"></script>
-<script language="javascript" type="text/javascript" src="jQuery/jquery-2.1.0.js"></script>
-<script language="javascript" type="text/javascript" src="DataCrawler.js"></script>
+<!-- CSS Files -->
+<link type="text/css" href="css/base.css" rel="stylesheet" />
+<link type="text/css" href="css/ForceDirected.css" rel="stylesheet" />
+<link rel="stylesheet" type="text/css" href="css/cssSlide/default.css" />
+<link rel="stylesheet" type="text/css" href="css/cssSlide/component.css" />
+
+<!-- JS Files -->
+<script language="javascript" type="text/javascript" src="js/Jit/jit.js"></script>
+<script language="javascript" type="text/javascript" src="js/jQuery/jquery-2.1.0.js"></script>
+<script language="javascript" type="text/javascript" src="js/DataCrawler.js"></script>
+<script src="js/jsSlide/classie.js"></script>
+
 </head>
-<body onload='init("car", "#<a [^>]*>([^<]*)</a>#", "http://wordnetweb.princeton.edu/perl/webwn?s=$TARGET&sub=Search+WordNet&o2=&o0=1&o8=1&o1=1&o7=&o5=&o9=&o6=&o3=&o4=&h=")'>
+<body>
+
+<div id="champs"> 
+	<div id="recherche">
+	<div id="second" style="display:block;"><input id="t" type="text" name="Cible" placeholder="Cible"/></div>	
+	<div id="first" style="display:block;"><input id="f" type="text" name="Champs" placeholder="Champs"/></div>
+	<div id="third" style="display:block;"><textarea id="r" style="width: 200px; height: 137px; border-radius: 90px;" type="text" name="Regles" placeholder="Régles...." ></textarea>
+		
+	</div>
+		<div id="button" data-role="button" onclick='init(document.getElementById("t").value, document.getElementById("f").value, document.getElementById("r").value)'>valider</div>
+	</div>	
+	</div>	
+
 <div id="container">
 
   <div id="left-container"></div>
@@ -25,6 +43,14 @@
   </div>
 
   <div id="log"></div>
+
 </div>
+
+<script type="text/javascript">	
+	$("#button").click(function() {
+		$( "#champs" ).toggle( "scale" );
+	});
+	</script>
+
 </body>
 </html>

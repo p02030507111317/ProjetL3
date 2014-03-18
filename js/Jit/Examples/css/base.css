@@ -7,38 +7,6 @@ html, body {
     background-color:#F2F2F2;
 }
 
-div#champs{
-    z-index: 10000;
-    background: #e8e2e2;
-    position:fixed;
-    left: 50%;
-    top: 50%;
-    width: 400px;
-    height: 400px;
-    margin-left: -200px; /* Cette valeur doit être la moitié négative de la valeur du width */
-    margin-top: -200px;
-    border-radius: 200px 200px 200px 200px;
-    color: rgba(98, 98, 98, 0.98);
-    font-family: 'Lato', sans-serif;
-    font-weight: 200;
-    font-size: 1.3em;
-}
-
-div#button{
-    cursor: pointer;
-    padding: 10px 0px 0px 0px;
-    
-}
-
-div#champs input[placeholder] { 
-    text-align: center;
-}
-
-div#recherche{
-margin-top: 10%;
-
-}
-
 input, select {
     font-size:0.9em;
 }
@@ -52,7 +20,7 @@ h4 {
     font-size:1.1em;
     text-decoration:none;
     font-weight:normal;
-
+    color:#23A4FF;
 }
 
 a {
@@ -60,20 +28,18 @@ a {
 }
 
 #container {
-    width: auto;
-    height: 500px;
+    width: 1000px;
+    height: 600px;
     margin:0 auto;
     position:relative;
 }
 
- 
+#left-container, 
+#right-container, 
 #center-container {
+    height:600px;
     position:absolute;
     top:0;
-    width:100%;
-    background-color:#1a1a1a;
-    color:#ccc;
-    height:auto;
 }
 
 #left-container, #right-container {
@@ -105,6 +71,13 @@ a {
     text-indent:8px;
 }
 
+#center-container {
+    width:600px;
+    left:200px;
+    background-color:#1a1a1a;
+    color:#ccc;
+}
+
 .text {
     margin: 7px;
 }
@@ -126,7 +99,7 @@ a {
 
 #infovis {
     position:relative;
-    width:100%;
+    width:600px;
     height:600px;
     margin:auto;
     overflow:hidden;
