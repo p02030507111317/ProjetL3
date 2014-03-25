@@ -40,9 +40,7 @@ function add(fd, node, r, f){
       var j = arg;
       //alert(JSON.stringify(j));
       for (var i = 0; i < j['noeuds'].length; i++) {
-        //alert("Noeud: " + j["noeuds"][i]["id"] + " Nom: " + j["noeuds"][i]["nom"]);
-        var newnode = {id: j["noeuds"][i]["id"], name: j["noeuds"][i]["nom"], data: {color: "#FF0000"}};
-        fd.graph.addNode(newnode);
+        var newnode = {id: j["noeuds"][i]["id"], name: j["noeuds"][i]["nom"]};
         fd.graph.addAdjacence(node, newnode);
       };
       fd.computeIncremental({  
@@ -80,6 +78,7 @@ function init(t, r, f){
     // JSON structure.
     Node: {
       overridable: true,
+      color:'#FF0000',
       dim: 12
     },
     Edge: {
@@ -120,7 +119,11 @@ function init(t, r, f){
         // }
         if (node) {
           //alert("Tu a cliqué sur un noeud");
-          add(fd, node, r, f);
+          if (node.getData('color') == "#FF0000") {
+           Log.write("Waiting for data");
+            node.setData('color',"#00FF00");
+            add(fd, node, r, f);
+          };
         } else{
           //alert("Tu a cliqué sur le canevas");
         };
@@ -221,7 +224,7 @@ function init(t, r, f){
       style.display = '';
     }
   });
-  var rootnode = {id: t, name: t, data: {color: "#FF0000"}}; 
+  var rootnode = {id: md5(t), name: t, data: {color: "#FF0000"}}; 
   fd.loadJSON(rootnode);
   fd.refresh();
 }

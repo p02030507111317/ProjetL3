@@ -15,8 +15,8 @@
 		$n = preg_match_all($mainrule, $output, $matches, PREG_PATTERN_ORDER);
 
 		$noeuds = array();
-		foreach (array_unique($matches[1]) as $key => $value) {
-			$val = array("id" => md5($value), "nom" => $value);
+		foreach (array_unique($matches["node"]) as $key => $value) {
+			$val = array("id" => md5($value), "nom" => $value, "data" => $matches["data"][$key]);
 			array_push($noeuds, $val);
 		}
 		$links = array();
