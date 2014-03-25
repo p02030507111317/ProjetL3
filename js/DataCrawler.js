@@ -32,7 +32,7 @@ function add(fd, node, r, f){
     type: "POST",
     dataType: "json",
     //contentType: "json",
-    data: {"target":node.name, "mainrule":r, "field":f},
+    data: {"target":node.id, "mainrule":r, "field":f},
     error: function(xhr, ajaxOptions, thrownError) {
         alert("Error during data collect");
       }
@@ -224,7 +224,7 @@ function init(t, r, f){
       style.display = '';
     }
   });
-  var rootnode = {id: md5(t), name: t, data: {color: "#FF0000"}}; 
+  var rootnode = {id: t, name: "center", data: {color: "#FF0000"}}; 
   fd.loadJSON(rootnode);
   fd.refresh();
 }
