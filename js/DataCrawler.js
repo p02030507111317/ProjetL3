@@ -57,7 +57,30 @@ function add(fd, node, r, f){
     });
 };
 
-function init(t, r, f){
+function zoomin(){
+  fd.canvas.scale(1.1,1.1);
+}
+
+function zoomout(){
+  fd.canvas.scale(0.9,0.9);
+}
+
+function redraw()
+{
+  fd.computeIncremental({  
+          iter: 5,  
+          property: 'end',  
+          onStep: function(perc) {  
+            Log.write("loading " + perc + "%");  
+          },  
+          onComplete: function() {  
+          Log.write("done");  
+          fd.animate();  
+          }  
+        });
+}
+
+function init(t, n, r, f){
     fd = new $jit.ForceDirected({
     //id of the visualization container
     injectInto: 'container',
@@ -104,28 +127,12 @@ function init(t, r, f){
         fd.plot();
       },
       onClick: function(node, eventInfo, e) {
-        // if (node.color == '#FF0000'){
-        //   add(fd, node, mainrule, field);
-        //   node.color = "#0000FF";
-        // }
-        // else {
-        //   if(!node) return;  
-        //   var html = "<h4>" + node.name + "</h4><b> connections:</b><ul><li>";
-        //   var list = [];  
-        //   node.eachAdjacency(function(adj){  
-        //     list.push(adj.nodeTo.name);  
-        //   });   
-        //   $jit.id('inner-details').innerHTML = html + list.join("</li><li>") + "</li></ul>"; 
-        // }
         if (node) {
-          //alert("Tu a cliqué sur un noeud");
           if (node.getData('color') == "#FF0000") {
            Log.write("Waiting for data");
             node.setData('color',"#00FF00");
             add(fd, node, r, f);
           };
-        } else{
-          //alert("Tu a cliqué sur le canevas");
         };
       },
       //Implement the same handler for touchscreens
@@ -171,46 +178,46 @@ function init(t, r, f){
       //its name. This is done by animating some
       //node styles like its dimension and the color
       //and lineWidth of its adjacencies.
-      nameContainer.onclick = function() {
-        //set final styles
-        fd.graph.eachNode(function(n) {
-          if(n.id != node.id) delete n.selected;
-          n.setData('dim', 7, 'end');
-          n.eachAdjacency(function(adj) {
-            adj.setDataset('end', {
-              lineWidth: 0.4,
-              color: '#23a4ff'
-            });
-          });
-        });
-        if(!node.selected) {
-          node.selected = true;
-          node.setData('dim', 17, 'end');
-          node.eachAdjacency(function(adj) {
-            adj.setDataset('end', {
-              lineWidth: 3,
-              color: '#36acfb'
-            });
-          });
-        } else {
-          delete node.selected;
-        }
-        //trigger animation to final styles
-        fd.fx.animate({
-          modes: ['node-property:dim',
-                  'edge-property:lineWidth:color'],
-          duration: 500
-        });
-        // Build the right column relations list.
-        // This is done by traversing the clicked node connections.
-        var html = "<h4>" + node.name + "</h4><b> connections:</b><ul><li>",
-            list = [];
-        node.eachAdjacency(function(adj){
-          if(adj.getData('alpha')) list.push(adj.nodeTo.name);
-        });
-        //append connections information
-        $jit.id('inner-details').innerHTML = html + list.join("</li><li>") + "</li></ul>";
-      };
+      // nameContainer.onclick = function() {
+      //   //set final styles
+      //   fd.graph.eachNode(function(n) {
+      //     if(n.id != node.id) delete n.selected;
+      //     n.setData('dim', 7, 'end');
+      //     n.eachAdjacency(function(adj) {
+      //       adj.setDataset('end', {
+      //         lineWidth: 0.4,
+      //         color: '#23a4ff'
+      //       });
+      //     });
+      //   });
+      //   if(!node.selected) {
+      //     node.selected = true;
+      //     node.setData('dim', 17, 'end');
+      //     node.eachAdjacency(function(adj) {
+      //       adj.setDataset('end', {
+      //         lineWidth: 3,
+      //         color: '#36acfb'
+      //       });
+      //     });
+      //   } else {
+      //     delete node.selected;
+      //   }
+      //   //trigger animation to final styles
+      //   fd.fx.animate({
+      //     modes: ['node-property:dim',
+      //             'edge-property:lineWidth:color'],
+      //     duration: 500
+      //   });
+      //   // Build the right column relations list.
+      //   // This is done by traversing the clicked node connections.
+      //   var html = "<h4>" + node.name + "</h4><b> connections:</b><ul><li>",
+      //       list = [];
+      //   node.eachAdjacency(function(adj){
+      //     if(adj.getData('alpha')) list.push(adj.nodeTo.name);
+      //   });
+      //   //append connections information
+      //   $jit.id('inner-details').innerHTML = html + list.join("</li><li>") + "</li></ul>";
+      // };
     },
     // Change node styles when DOM labels are placed
     // or moved.
@@ -224,22 +231,7 @@ function init(t, r, f){
       style.display = '';
     }
   });
-  var rootnode = {id: t, name: "center", data: {color: "#FF0000"}}; 
+  var rootnode = {id: t, name: n, data: {color: "#FF0000"}}; 
   fd.loadJSON(rootnode);
   fd.refresh();
-}
-
-function redraw()
-{
-  fd.computeIncremental({  
-          iter: 5,  
-          property: 'end',  
-          onStep: function(perc) {  
-            Log.write("loading " + perc + "%");  
-          },  
-          onComplete: function() {  
-          Log.write("done");  
-          fd.animate();  
-          }  
-        });
 }

@@ -15,25 +15,43 @@
 <script language="javascript" type="text/javascript" src="js/jQuery/jquery-2.1.0.js"></script>
 <script language="javascript" type="text/javascript" src="js/DataCrawler.js"></script>
 <script language="javascript" type="text/javascript" src="js/md5.js"></script>
+<script language="javascript" type="text/javascript" src="js/DivInfo.js"></script>
+<script language="javascript" type="text/javascript" src="js/DivExemple.js"></script>
 <script src="js/jsSlide/classie.js"></script>
 
 </head>
 <body>
 
+
+<!--Ici se trouvera les bouton + x et "hand"-->
+<div id="panel"> 	
+	<div id="plus"></div>
+	<div id="deplacer"></div>
+	<div id="supp"></div>
+</div> <!--Fin panel-->
+
 <div id="champs"> 
 	<div id="recherche">
-	<div id="second" style="display:block;"><input id="t" type="text" name="Cible" placeholder="Cible"/></div>	
-	<div id="first" style="display:block;"><textarea id='f' type="text" name="Champs" placeholder="Champs"></textarea> </textarea> </div>
-	<div id="third" style="display:block;"><textarea id="r" style="width: 200px; height: 137px; border-radius: 90px;" type="text" name="Regles" placeholder="Règles...." ></textarea>
+	<div id="quad" style="display:block;"><input id="n" type="text" name="Name" onMouseOver="displayDivInfo('Display name of the root node'); displayDivExemple('car');" onMouseOut="displayDivInfo(); displayDivExemple()" placeholder="name" /></div>
+	<div id="second" style="display:block;"><input id="t" type="text" name="Cible" onMouseOver="displayDivInfo('Target of the root node'); displayDivExemple('car');" onMouseOut="displayDivInfo(); displayDivExemple()" placeholder="Target"/></div>	
+	<div id="first" style="display:block;"><textarea id='f' type="text" name="Champs" onMouseOver="displayDivInfo('Field of the root node<br />URL with the string $TARGET<br /> The next node will replace $TARGET by it\'s node field'); displayDivExemple('http://wordnetweb.princeton.edu/ <br /> perl/webwn?o2=&o0=&o8=1&o1=&o7=&o5 <br /> =&o9=&o6=&o3=&o4=&s=$TARGET'); " onMouseOut="displayDivInfo(); displayDivExemple()" placeholder="Field"></textarea> </textarea> </div>
+	<div id="third" style="display:block;"><textarea id="r" type="text" onMouseOver="displayDivInfo('Rule <br />Regular expression with 2 named groups :<ul><li>node: next target</li><li>name: name of the next target</li></ul>'); displayDivExemple('blabla');" onMouseOut="displayDivInfo(); displayDivExemple();" placeholder="Rule" ></textarea>
 		
 	</div>
-		<div id="button" data-role="button" onclick='init(document.getElementById("t").value, document.getElementById("r").value, document.getElementById("f").value)'>valider</div>
+		<div id="button" data-role="button" onclick='init(document.getElementById("t").value, document.getElementById("n").value, document.getElementById("r").value, document.getElementById("f").value);'>valider</div>
 	</div>	
 	</div>	
+
+<div id="mask"></div>
 
 <div id="container">
 
   <div id="left-container"></div>
+  <div id="opZoom">
+			<div id="zoom" class="bZoom" onclick="zoomin();">+</div>
+			<div id="reload" class="bZoom" > <img src="css/imageBoutton/reload.png" style="height: 40px; width: 40px; " onclick="redraw();" /> </div>
+			<div id="dezoom" class="bZoom" onclick="zoomout();">-</div>
+		</div>
 
   <div id="center-container">
     <div id="infovis"></div>    
@@ -48,10 +66,26 @@
 </div>
 
 <script type="text/javascript">	
-	$("#button").click(function() {
-		$( "#champs" ).toggle( "scale" );
-	});
-	</script>
+
+$("#button").click(function() {
+$( "#champs" ).toggle( "scale" );
+$( "#mask" ).fadeTo("slow", 0);
+$( "#mask" ).css("display","none");	
+});
+
+</script>
+
+<script type="text/javascript">	
+$("#supp").click(function() {
+			$( "#infovis-canvas" ).css("cursor","url('css/imageBoutton/cursorR.png'), auto");	
+		});
+</script>
+
+<script type="text/javascript">	
+$("#plus").click(function() {
+			$( "#infovis-canvas" ).css("cursor","url('css/imageBoutton/cursorG.png'), auto");	
+		});
+</script>
 
 </body>
 </html>
