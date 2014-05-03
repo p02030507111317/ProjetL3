@@ -5,13 +5,52 @@ html, body {
     padding:0;
     font-family: "Lucida Grande", Verdana;
     font-size: 0.9em;
-    text-align: center;
     background-color:#F2F2F2;
     height: 100%;
 }
 
+h4{
+ padding: 0px 5px;
+    margin: 0;
+    text-align: center;
+    text-shadow: 1px 1px 0px rgba(255,255,255,0.5);
+
+}
+a > h4:hover{
+    color: rgba(50, 50, 50, 0.98);
+}
+
+html {
+    -moz-user-select: -moz-none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+}
+ 
+::selection { background: transparent; color:inherit; }
+::-moz-selection { background: transparent; color:inherit; }
+
+
 #infovis-canvas{
     /*cursor: url('imageBoutton/cursorR.png'), auto;*/
+}
+
+
+p
+{
+    color: #555;
+    padding: 10px 5px;
+    margin: 0;
+    text-align: center;
+    text-shadow: 1px 1px 0px rgba(255,255,255,0.5);
+
+}
+
+p:last-child{
+    font-style: italic;
+    font-weight: lighter;
+
 }
 
 #mask{
@@ -35,12 +74,14 @@ html, body {
     display: block;
     font-size: 32px;
     overflow: hidden;
+    text-align: center;
 }
+
 
 
 /* LE ZOOM */
 #opZoom{
-    margin-top: 50px;
+    margin-top: 430px;
     margin-right: 50px;
     width: 60px;
     height: auto;
@@ -52,6 +93,7 @@ html, body {
     border-radius: 27px;
     overflow: hidden;
     background-color: #0C0B0B;
+    text-align: center;
 }
 
 
@@ -102,13 +144,14 @@ div#deplacer{
 
 
 
-div#champs{
+div#champs {
+text-align: center;
 overflow: hidden;
-border-style: solid;
-border-width: 9px;
-border-color: rgba(114, 114, 114, 0.29);
+/* border-style: solid; */
+/* border-width: 9px; */
+/* border-color: rgba(114, 114, 114, 0.29); */
 z-index: 10000;
-background: #e8e2e2;
+background: #CACACA;
 position: fixed;
 left: 50%;
 top: 50%;
@@ -120,20 +163,53 @@ border-radius: 200px 200px 200px 200px;
 color: rgba(98, 98, 98, 0.98);
 font-family: 'Lato', sans-serif;
 font-weight: 200;
-font-size: 1.3em; 
+font-size: 1.3em;
+-moz-box-shadow: 0 0 19px #90E6D4;
+-webkit-box-shadow: 0 0 19px #90E6D4;
+box-shadow: 0 0 19px #90E6D4;
+}
+
+
+/*Doc 28/04  ÉTAT : EN COURS */
+
+div#doc{
+text-align: center;
+overflow: hidden;
+z-index: 10001;
+background: #CACACA;
+position: fixed;
+left: 90%;
+top: 80%;
+width: 100px;
+height: 100px;
+margin-left: -200px;
+margin-top: -200px;
+border-radius: 50px 50px 50px 50px;
+font-family: 'Lato', sans-serif;
+font-weight: 200;
+font-size: 1.3em;
+-moz-box-shadow: 0 0 19px #90E6D4;
+-webkit-box-shadow: 0 0 19px #90E6D4;
+box-shadow: 0 0 19px #90E6D4; 
+padding-top: 36px
+}
+
+div#doc a {
+    color: rgba(98, 98, 98, 0.98);
 }
 
 div#third textarea{
-width: 407px;
+width: 422px;
 height: 110px;
 border-radius: 10px 10px 100px 100px;
 margin-left: -12px;
 text-align: center;
 padding: 5px 50px 5px 48px;
+margin-top: -1px;
 }
 
 div#first textarea{
-    width: 407px;
+    width: 422px;
     margin-left: -12px;
 height: 94px;
 border-radius: 10px;
@@ -147,7 +223,7 @@ height: 62px;
 border-radius: 10px;
 margin-left: -10px;
 margin-top: -40px;
-padding: 10px 48px 5px 48px;
+padding: 10px 43px 5px 48px;
 }
 
 div#quad input{
@@ -155,8 +231,8 @@ div#quad input{
 height: 62px;
 border-radius: 10px;
 margin-left: -10px;
-margin-top: -40px;
-padding: 10px 110px 5px 110px;
+margin-top: -45px;
+padding: 10px 105px 5px 110px;
 margin-bottom: 38px
 
 }
