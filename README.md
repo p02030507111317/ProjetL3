@@ -22,14 +22,14 @@ Interface
 Règle
 -----
 
-Les rêgles de détermination sont des expressions régulières (PREG) contenant deux groupes nommés:
+Les règles de détermination sont des expressions régulières (PREG) contenant deux groupes nommés:
 
 * node: identifiant de la donnée suivante
 * data: nom (affiché) de la donnée
 
 La plupart du temps, les données seront liées entre elles par des liens href. Dans ce cas, une rêgle générale peut être utilisée:
 
-> `#<a [^h]* href="www.foo.bar/abc/def/(?<node>[^"]*)" [^>]*>(?<data>[^<]*)</a>#`
+> `#<a .*? href="www.foo.bar/abc/def/(?<node>[^"]*)" .*?>(?<data>[^<]*)</a>#`
 
 Pour plus d'inforamtions sur les expressions régulières [https://en.wikipedia.org/wiki/Regular_expression](PREG)
 
