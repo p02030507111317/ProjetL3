@@ -46,7 +46,7 @@ Nous nous interessons ici à la varsion Wheezy du paquet. Le champ est ici
 Il s'agit ici de l'analyse du code source de la page d'un paquet. Ici, chaque paquet dont dépend le paquet choisi est listé sous forme de lien href de la forme 
 >`<a href="/wheezy/xxx">yyy</a>` où xxx est l'identifiant de ce paquet et yyy son nom
 
-###3. Création de la rêgle
+###3. Création de la règle
 Il s'agira ici de récupérer les identifiants et noms des paquets. La rêgle sera : 
 >` #<a href="/wheezy/(?<node>[^"]*)">(?<data>[^<]*)</a># `
 
