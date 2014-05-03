@@ -19,7 +19,7 @@ Interface
 3. Field: Champ de recherche (URL) des données
 4. Rule: Rêgle de détermination des données liées (voir Rêgle)
 
-Rêgle
+Règle
 -----
 
 Les rêgles de détermination sont des expressions régulières (PREG) contenant deux groupes nommés:
