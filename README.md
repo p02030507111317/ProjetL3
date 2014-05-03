@@ -31,7 +31,7 @@ La plupart du temps, les données seront liées entre elles par des liens href. 
 
 > `#<a .*? href="www.foo.bar/abc/def/(?<node>[^"]*)" .*?>(?<data>[^<]*)</a>#`
 
-Pour plus d'inforamtions sur les expressions régulières [https://en.wikipedia.org/wiki/Regular_expression](PREG)
+Pour plus d'inforamtions sur les expressions régulières [PREG](https://en.wikipedia.org/wiki/Regular_expression)
 
 Utilisation
 -----------
