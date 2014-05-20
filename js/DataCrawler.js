@@ -1,4 +1,4 @@
-var labelType, useGradients, nativeTextSupport, animate, fd;
+var labelType, useGradients, nativeTextSupport, animate, fd, ctool;
 
 (function() {
   var ua = navigator.userAgent,
@@ -78,6 +78,28 @@ function redraw()
           fd.animate();  
           }  
         });
+}
+
+function selectTool(tool)
+{
+  if(tool)
+  {
+    if(tool==1)
+    {
+      document.body.style.cursor = "url(./css/imageBoutton/cursorG.png), auto";
+      ctool = "add";
+    }
+    if(tool==2)
+    {
+      document.body.style.cursor = "auto";
+      ctool = null;
+    }
+    if(tool==3)
+    {
+      document.body.style.cursor = "url(./css/imageBoutton/cursorR.png), auto";
+      ctool = "del";
+    }
+  }
 }
 
 function init(t, n, r, f){
