@@ -17,13 +17,18 @@
 <script language="javascript" type="text/javascript" src="js/md5.js"></script>
 <script language="javascript" type="text/javascript" src="js/DivInfo.js"></script>
 <script language="javascript" type="text/javascript" src="js/DivExemple.js"></script>
+<script language="javascript" type="text/javascript" src="js/autoRempl.js"></script>
+<script language="javascript" type="text/javascript" src="js/MenuEx.js"></script>
 <script src="js/jsSlide/classie.js"></script>
 <script src="//code.jquery.com/jquery-1.10.2.js"></script>
 <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+<script src="js/jquery.menu.js"></script>
+
 
  <script> <!-- La bulle help est draggable (pour ajouter du fun) jaurai bien aimer relier cette petit bulle à #champs par un ligne mais jy arrive pas avec un canvas -->
   $(function() {
     $( "#doc" ).draggable();
+
   });
   </script>
 </head>
@@ -43,6 +48,17 @@
 	 <h4>HELP?<h4> <!--Ou "Documentation" je sais pas trop-->
 	</a>
 </div>
+
+
+	<div  id="outer_container" class="ui-widget-content outer_container" > 
+        <a class="menu_button" title="Toggle"><span>Examples</span></a>
+        <ul class="menu_option">
+           <li><a href='#' onclick="autoRempl(1)"><span>WordNet</span></a></li>
+ 		   <li><a href='#' onclick="autoRempl(2)"><span>Steam</span></a></li>
+  		   <li><a href='#' onclick="autoRempl(3)"><span>Debian</span></a></li>
+        </ul>
+	</div>
+
 
 <div id="champs" class="champs"> 
 	<div id="recherche">
@@ -69,6 +85,7 @@
 		</div>
 
   <div id="center-container">
+  	<img src="css/Universit%C3%A9_de_Savoie_(logo).svg" style="position: absolute; width: 158px; opacity: 0.6; top: 64%; left: 8%;"/>
     <div id="infovis"></div>    
   </div>
 
@@ -88,11 +105,32 @@ $( "#champs" ).toggle( "scale" );
 $( "#mask" ).fadeTo("slow", 0);
 $( "#mask" ).css("display","none");	
 $("#doc").css("display","none")
+$("#outer_container").css("display","none")
 });
 
 </script>
 
+<script type="text/javascript">
+    function PieMenuInit(){		
+			$('#outer_container').PieMenu({
+			   'starting_angel':0,
+		        'angel_difference' : 110,
+		        'radius':150,
+		    }); 		
+		}
+		$(function() {          
+			$( "#outer_container" ).draggable();
+			PieMenuInit();
 
+		});
+		function reset(){
+			if($(".menu_button").hasClass('btn-rotate'))
+			$(".menu_button").trigger('click');
+
+			$("#info").fadeIn("slow").fadeOut("slow");
+			PieMenuInit();
+		}
+</script>
 
 <script type="text/javascript">	
 $("#supp").click(function() {
