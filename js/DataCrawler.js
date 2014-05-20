@@ -102,6 +102,23 @@ function selectTool(tool)
   }
 }
 
+function dot(fd)
+{
+  var r = "diGraph {\n";
+  fd.graph.eachNode(function (node){
+    r = r + "\"" + node.id + "\" [label = \"" + node.name + "\"];\n";
+  });
+  fd.graph.eachNode(function (node) {
+    var pars = node.getParents();
+    for (var i = 0; i < pars.length; i++)
+    {
+      r = r + "\"" + pars[i].id + "\" -> \"" + node.id + "\";\n";
+    };
+  });
+  r = r + "}";
+  alert(r);
+}
+
 function init(t, n, r, f){
     fd = new $jit.ForceDirected({
     //id of the visualization container
@@ -136,25 +153,43 @@ function init(t, n, r, f){
       enable: true,
       type: 'Native',
       //Change cursor style when hovering a node
-      onMouseEnter: function() {
-        fd.canvas.getElement().style.cursor = 'move';
-      },
-      onMouseLeave: function() {
-        fd.canvas.getElement().style.cursor = '';
-      },
+      // onMouseEnter: function() {
+      //   fd.canvas.getElement().style.cursor = 'move';
+      // },
+      // onMouseLeave: function() {
+      //   fd.canvas.getElement().style.cursor = '';
+      // },
       //Update node positions when dragged
       onDragMove: function(node, eventInfo, e) {
-        var pos = eventInfo.getPos();
-        node.pos.setc(pos.x, pos.y);
-        fd.plot();
+        if(!ctool)
+        {
+          var pos = eventInfo.getPos();
+          node.pos.setc(pos.x, pos.y);
+          fd.plot();
+        }
       },
       onClick: function(node, eventInfo, e) {
         if (node) {
-          if (node.getData('color') == "#FF0000") {
-           Log.write("Waiting for data");
-            node.setData('color',"#00FF00");
-            add(fd, node, r, f);
-          };
+          if(ctool == "add")
+          {
+            if (node.getData('color') == "#FF0000") {
+             Log.write("Waiting for data");
+              node.setData('color',"#00FF00");
+              add(fd, node, r, f);
+            };
+          }
+          if(ctool == "del")
+          {
+            node.setData('alpha', 0, 'end');
+            node.eachAdjacency(function(adj) {
+              adj.setData('alpha', 0, 'end');
+            });
+            fd.fx.animate({
+              modes: ['node-property:alpha',
+                      'edge-property:alpha'],
+              duration: 500
+            });
+          }
         };
       },
       //Implement the same handler for touchscreens
@@ -177,25 +212,25 @@ function init(t, n, r, f){
           style = nameContainer.style;
       nameContainer.className = 'name';
       nameContainer.innerHTML = node.name;
-      closeButton.className = 'close';
-      closeButton.innerHTML = 'x';
+      //closeButton.className = 'close';
+      //closeButton.innerHTML = 'x';
       domElement.appendChild(nameContainer);
-      domElement.appendChild(closeButton);
+      //domElement.appendChild(closeButton);
       style.fontSize = "0.8em";
       style.color = "#ddd";
       //Fade the node and its connections when
       //clicking the close button
-      closeButton.onclick = function() {
-        node.setData('alpha', 0, 'end');
-        node.eachAdjacency(function(adj) {
-          adj.setData('alpha', 0, 'end');
-        });
-        fd.fx.animate({
-          modes: ['node-property:alpha',
-                  'edge-property:alpha'],
-          duration: 500
-        });
-      };
+      // closeButton.onclick = function() {
+      //   node.setData('alpha', 0, 'end');
+      //   node.eachAdjacency(function(adj) {
+      //     adj.setData('alpha', 0, 'end');
+      //   });
+      //   fd.fx.animate({
+      //     modes: ['node-property:alpha',
+      //             'edge-property:alpha'],
+      //     duration: 500
+      //   });
+      // };
       //Toggle a node selection when clicking
       //its name. This is done by animating some
       //node styles like its dimension and the color
