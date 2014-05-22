@@ -5,7 +5,6 @@
 		$target = $_POST["target"];
 		$mainrule = $_POST["mainrule"];
 		$current_field = str_replace('$TARGET', $target, $field);
-		$excludes = $_POST["excludes"];
 
 		$ch = curl_init($current_field);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -17,6 +16,7 @@
 		$n = preg_match_all($mainrule, $output, $matches, PREG_PATTERN_ORDER);
 
 		$noeuds = array();
+		//TODO => S'ajouter soi même
 		foreach (array_unique($matches["node"]) as $key => $value) {
 			$val = array("id" => $value, "nom" => $matches["data"][$key]);
 			array_push($noeuds, $val);

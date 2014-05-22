@@ -19,13 +19,15 @@
 <script language="javascript" type="text/javascript" src="js/DivExemple.js"></script>
 <script language="javascript" type="text/javascript" src="js/autoRempl.js"></script>
 <script language="javascript" type="text/javascript" src="js/MenuEx.js"></script>
+<script language="javascript" type="text/javascript" src="js/popup.js"></script>
 <script src="js/jsSlide/classie.js"></script>
 <script src="//code.jquery.com/jquery-1.10.2.js"></script>
 <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
 <script src="js/jquery.menu.js"></script>
+<script src="js/zeroclipboard/ZeroClipboard.js"></script>
 
 
- <script> <!-- La bulle help est draggable (pour ajouter du fun) jaurai bien aimer relier cette petit bulle à #champs par un ligne mais jy arrive pas avec un canvas -->
+ <script> 
   $(function() {
     $( "#doc" ).draggable();
 
@@ -34,24 +36,33 @@
 </head>
 <body>
 
+<div id="popup_name" class="popup_block">
+	<h2>Exportation du graphique</h2>
+	<textarea id="areaPop">
+	</textarea>
+	<button class="buttonPP" id="clip_copy" data-clipboard-target="areaPop">Copier dans le presse papier</button>
+</div>
+
+
 <!--Ici se trouvera les bouton + x et "hand"-->
-<div id="panel"> 	
-	<div id="plus" onclick="selectTool(1);"></div>
+<div id="panel"> 
+
+	<div id="plus" class="" onclick="selectTool(1);"></div>
 	<div id="deplacer" onclick="selectTool(2);"></div>
 	<div id="supp" onclick="selectTool(3);"></div>
 </div> <!--Fin panel-->
 
-<!-- Bouton pour accéder à la doc // 28/04  ÉTAT  -->
 
-<div  id="doc" class="ui-widget-content" > 
-	<a href="#" >
-	 <h4>HELP?<h4> <!--Ou "Documentation" je sais pas trop-->
+
+<div class="ui-widget-content" > 
+	<a id="doc" href="#"  >
+	 <span>HELP?<span> <!--Ou "Documentation" je sais pas trop-->
 	</a>
 </div>
 
 
 	<div  id="outer_container" class="ui-widget-content outer_container" > 
-        <a class="menu_button" title="Toggle"><span>Examples</span></a>
+        <a id="bulleEx" class="menu_button" title="Toggle" ><span>Examples</span></a>
         <ul class="menu_option">
            <li><a href='#' onclick="autoRempl(1)"><span>WordNet</span></a></li>
  		   <li><a href='#' onclick="autoRempl(2)"><span>Steam</span></a></li>
@@ -77,15 +88,17 @@
 
 <div id="container">
 
+	<a href="#?w=500" class="ButtonExport poplight" rel="popup_name" onclick="dot()">Export .JIT</a>
+
   <div id="left-container"></div>
-  <div id="opZoom">
+  <div id="opZoom"><!--bug Affichage-->
 			<div id="zoom" class="bZoom" onclick="zoomin();">+</div>
 			<div id="reload" class="bZoom" > <img src="css/imageBoutton/reload.png" style="height: 40px; width: 40px; " onclick="redraw();" /> </div>
 			<div id="dezoom" class="bZoom" onclick="zoomout();">-</div>
 		</div>
 
-  <div id="center-container">
-  	<img src="css/Universit%C3%A9_de_Savoie_(logo).svg" style="position: absolute; width: 158px; opacity: 0.6; top: 64%; left: 8%;"/>
+  <div id="center-container"><!--bug Affichage (surement aussi)-->
+  	<img src="css/Universit%C3%A9_de_Savoie_(logo).svg" style="position: absolute; width: 158px; opacity: 0.6; top: 80%; left: 8%; z-index:99999;"/>
     <div id="infovis"></div>    
   </div>
 
@@ -110,6 +123,8 @@ $("#outer_container").css("display","none")
 
 </script>
 
+
+
 <script type="text/javascript">
     function PieMenuInit(){		
 			$('#outer_container').PieMenu({
@@ -131,6 +146,8 @@ $("#outer_container").css("display","none")
 			PieMenuInit();
 		}
 </script>
+
+
 
 <script type="text/javascript">	
 $("#supp").click(function() {

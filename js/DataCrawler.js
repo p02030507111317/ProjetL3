@@ -47,10 +47,14 @@ function add(fd, node, r, f){
           iter: 5,  
           property: 'end',  
           onStep: function(perc) {  
-            Log.write("loading " + perc + "%");  
+            Log.write("loading " + perc + "%");
+            
+            $("#log").fadeIn("9000") 
+            
           },  
           onComplete: function() {  
           Log.write("done");  
+          $("#log").fadeIn("2000").fadeOut("2000");
           fd.animate();  
           }  
         });
@@ -71,10 +75,12 @@ function redraw()
           iter: 5,  
           property: 'end',  
           onStep: function(perc) {  
-            Log.write("loading " + perc + "%");  
+            Log.write("loading " + perc + "%");
+            $("#log").fadeIn("2000");
           },  
           onComplete: function() {  
           Log.write("done");  
+          $("#log").fadeIn("2000").fadeOut("2000");
           fd.animate();  
           }  
         });
@@ -87,22 +93,43 @@ function selectTool(tool)
     if(tool==1)
     {
       document.body.style.cursor = "url(./css/imageBoutton/cursorG.png), auto";
+      var elmt = document.getElementById("plus");
+      elmt.className = " activeP";
+      elmt.style.background = "url('./css/imageBoutton/icroixSelect.png')";
+      document.getElementById("deplacer").style.background="url('./css/imageBoutton/ideplacer.png')";
+      document.getElementById("deplacer").style.backgroundSize="100% 100%";
+      document.getElementById("supp").style.background="url('./css/imageBoutton/supprimer.png')";
+      document.getElementById("supp").style.backgroundSize="100% 100%";
       ctool = "add";
     }
     if(tool==2)
     {
-      document.body.style.cursor = "auto";
+      document.body.style.cursor = "url(./css/imageBoutton/cursorD.png), auto";
+      var elmt = document.getElementById("deplacer");
+      elmt.style.background = "url('./css/imageBoutton/ideplacerSelect.png')";
+      document.getElementById("plus").style.background="url('./css/imageBoutton/icroix.png')";
+      document.getElementById("plus").style.backgroundSize="100% 100%";
+      document.getElementById("plus").className="";
+      document.getElementById("supp").style.background="url('./css/imageBoutton/supprimer.png')";
+      document.getElementById("supp").style.backgroundSize="100% 100%";
       ctool = null;
     }
     if(tool==3)
     {
       document.body.style.cursor = "url(./css/imageBoutton/cursorR.png), auto";
+      var elmt = document.getElementById("supp");
+      elmt.style.background = "url('./css/imageBoutton/supprimerSelect.png')";
+      document.getElementById("plus").style.background="url('./css/imageBoutton/icroix.png')";
+      document.getElementById("plus").style.backgroundSize="100% 100%";
+      document.getElementById("plus").className="";
+      document.getElementById("deplacer").style.background="url('./css/imageBoutton/ideplacer.png')";
+      document.getElementById("deplacer").style.backgroundSize="100% 100%";
       ctool = "del";
     }
   }
 }
 
-function dot(fd)
+function dot()
 {
   var r = "diGraph {\n";
   fd.graph.eachNode(function (node){
@@ -116,10 +143,15 @@ function dot(fd)
     };
   });
   r = r + "}";
-  alert(r);
+  document.getElementById("areaPop").innerHTML = r;
 }
 
 function init(t, n, r, f){
+
+      var elmt = document.getElementById("deplacer"); //petit bug quand on étant le premier noeud..
+      elmt.style.background = "url('./css/imageBoutton/ideplacerSelect.png')";
+      document.body.style.cursor = "url(./css/imageBoutton/cursorD.png), auto"; 
+      
     fd = new $jit.ForceDirected({
     //id of the visualization container
     injectInto: 'container',
@@ -174,6 +206,7 @@ function init(t, n, r, f){
           {
             if (node.getData('color') == "#FF0000") {
              Log.write("Waiting for data");
+             $("#log").fadeIn("9000") 
               node.setData('color',"#00FF00");
               add(fd, node, r, f);
             };
@@ -275,6 +308,10 @@ function init(t, n, r, f){
       //   //append connections information
       //   $jit.id('inner-details').innerHTML = html + list.join("</li><li>") + "</li></ul>";
       // };
+
+	
+
+    
     },
     // Change node styles when DOM labels are placed
     // or moved.
